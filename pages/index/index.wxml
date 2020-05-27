@@ -1,0 +1,33 @@
+
+<!-- 头部 -->
+<view class="header" style="margin-top:{{navH}}px">
+
+    <!-- 视频 -->
+  <view style="padding:0" data-e="{{e}}" bindtouchstart="start" bindtouchend="end">
+    <swiper class="swiper" wx:if="{{!videoSrc}}" duration="500" current="{{currentSwiper}}" circular="{{true}}"  data-e="{{e}}" bindchange="changeCurrent" wx:for-index="index">
+        <view wx:for="{{info}}" wx:key="this">
+        <swiper-item>
+        <image class="img" src="{{item.img}}" mode='aspectFill' />
+        <image class="playBnt" wx:if="{{item.type == 'video'}}" src='https://mutuan.com/img/videobofang.png' 
+        bindtap="play" data-item="{{item}}"/>
+        <view class="number">{{currentSwiper+1}}/{{info.length}}</view>
+        </swiper-item>
+        </view>
+    </swiper>
+    <!-- 视频的autoplay和controls属性要加上-->
+    <video class="MyVideo" enable-progress-gesture="{{false}}" custom-catch="{{false}}" wx:if="{{videoSrc}}" autoplay="{{true}}" src="{{videoSrc}}" controls="controls" bindpause="handleStop" ></video>
+
+    <!--自定义视频图片圆点-->
+    <view class="dots">  
+        <view class="{{videoHide?'header_view_show':'header_view_hide'}}" wx:for="{{info}}" wx:key="casekey" wx:for-item="btn" wx:for-index="index">  
+            <view wx:if="{{btn.type == 'video'}}" class="dot{{index == currentSwiper ? ' active' : ''}}" bindtap="clickBlackVideo" id="{{index}}">视频</view>  
+
+            <view bindtap="clickBlackImg" id="{{index}}" class="pic" wx:if="{{btn.type == 'img'}}">
+                 <view wx:if="{{index<2}}" class="dot {{currentSwiper>0 ? ' active' : ''}}">图片</view>  
+            </view>
+        </view>  
+    </view>
+    
+    </view>
+</view>
+<view class="main" style="height:1000rpx;width:100%;background:#999"></view>
